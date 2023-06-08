@@ -8,3 +8,4 @@ Cargo.lock
 /*.dylib
 /*.so*
 *.o
+ignored
