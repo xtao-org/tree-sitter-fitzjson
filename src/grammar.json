@@ -699,17 +699,8 @@
       "type": "CHOICE",
       "members": [
         {
-          "type": "SEQ",
-          "members": [
-            {
-              "type": "STRING",
-              "value": "\""
-            },
-            {
-              "type": "STRING",
-              "value": "\""
-            }
-          ]
+          "type": "STRING",
+          "value": "\"\""
         },
         {
           "type": "SEQ",
@@ -723,8 +714,11 @@
               "name": "string_content"
             },
             {
-              "type": "STRING",
-              "value": "\""
+              "type": "IMMEDIATE_TOKEN",
+              "content": {
+                "type": "STRING",
+                "value": "\""
+              }
             }
           ]
         }
@@ -742,7 +736,7 @@
               "value": 1,
               "content": {
                 "type": "PATTERN",
-                "value": "[^\\\\\"\\n]+"
+                "value": "[^\\\\\"\\u0001-\\u001F]+"
               }
             }
           },
@@ -764,7 +758,7 @@
           },
           {
             "type": "PATTERN",
-            "value": "(\\\"|\\\\|\\/|b|f|n|r|t|u)"
+            "value": "(\\\"|\\\\|\\/|b|f|n|r|t|u[0-9a-fA-F]{4})"
           }
         ]
       }

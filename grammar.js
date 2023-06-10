@@ -30,6 +30,7 @@ const number = token(prec(3, choice(
 
 const id = token(/[$_\p{ID_Start}][$\u200c\u200d\p{ID_Continue}]*/u)
 
+// todo: perhpas reduce/eliminate the use of this
 const falias = ($, name, node) => field(name, alias(node, $[name]))
 
 module.exports = grammar({
@@ -40,19 +41,23 @@ module.exports = grammar({
     $.comment,
   ],
 
-  // inline: $ => [$.key, $.value],
+  // todo: perhaps don't inline
   inline: $ => [$.key],
 
   externals: $ => [
     $.ms_start,
     $.ms_end,
 
+    // todo: perhaps rename this or otherwise make erroneous results like (top (ERROR (escape_sequence) (error_sentinel))) prettier
     $.error_sentinel,
   ],
 
   supertypes: $ => [
     $._plainval
   ],
+
+  // hm
+  // word: $ => $.id,
 
   rules: {
     top: $ => choice(
@@ -123,18 +128,22 @@ module.exports = grammar({
     number: $ => number,
 
     jsonstring: $ => choice(
-      seq('"', '"'),
-      seq('"', $.string_content, '"')
+      '""',
+      seq('"', $.string_content, token.immediate('"'))
     ),
 
     string_content: $ => repeat1(choice(
-      token.immediate(prec(1, /[^\\"\n]+/)),
+      // a character is: [\u0020-\u10FFFF] - '"' - '\'
+      // in other words: any code point except control characters and '"' and '\'
+      // we will express that with a negated character class
+      // note: U+0001–U+001F are the control characters
+      token.immediate(prec(1, /[^\\"\u0001-\u001F]+/u)),
       $.escape_sequence
     )),
 
     escape_sequence: $ => token.immediate(seq(
       '\\',
-      /(\"|\\|\/|b|f|n|r|t|u)/
+      /(\"|\\|\/|b|f|n|r|t|u[0-9a-fA-F]{4})/
     )),
 
     _valsep: $ => ',',
