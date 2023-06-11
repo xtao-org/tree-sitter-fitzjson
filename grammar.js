@@ -77,7 +77,8 @@ module.exports = grammar({
       field('disabled', optional($.disabled)), 
       field('key', $.key), 
       falias($, 'pipes', repeat($.pipe)),
-      choice(':', /\s/),
+      // note: /(\s)/ has to have the parens; otherwise tree-sitter somehow conflates this with /\s/ in extras and very weird things start happening, such as not respecting token.immediate and accepting jsonstrings with spaces 
+      choice(':', /(\s)/),
       field('value', $.value),
     )),
 
@@ -130,13 +131,6 @@ module.exports = grammar({
 
     jsonstring: $ => choice(
       '""',
-      // note: tree-sitter doesn't seem to respect token.immediate here 
-      // or in string_content or in escape_sequence
-      // it will accept happily strings that contain newlines
-      // forcing correct behavior would probably require manual handling of whitespace and comments
-      // for now this shall remain unresolved
-      // could workaround in the interpreter that would error if it detects a newline in a string
-      // filing an issue on tree-sitter github  may also be a good idea
       seq('"', $.string_content, token.immediate('"'))
     ),
 
@@ -154,7 +148,8 @@ module.exports = grammar({
       /(\"|\\|\/|b|f|n|r|t|u[0-9a-fA-F]{4})/
     )),
 
-    _valsep: $ => choice(',', /\s/),
+    // note: /(\s)/ has to have the parens; otherwise tree-sitter somehow conflates this with /\s/ in extras and very weird things start happening, such as not respecting token.immediate and accepting jsonstrings with spaces 
+    _valsep: $ => choice(',', /(\s)/),
 
     _primitive: $ => choice(
       alias('null', $.null), 

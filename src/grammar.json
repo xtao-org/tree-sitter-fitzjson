@@ -253,7 +253,7 @@
               },
               {
                 "type": "PATTERN",
-                "value": "\\s"
+                "value": "(\\s)"
               }
             ]
           },
@@ -747,20 +747,15 @@
         "type": "CHOICE",
         "members": [
           {
-            "type": "ALIAS",
+            "type": "IMMEDIATE_TOKEN",
             "content": {
-              "type": "IMMEDIATE_TOKEN",
+              "type": "PREC",
+              "value": 1,
               "content": {
-                "type": "PREC",
-                "value": 1,
-                "content": {
-                  "type": "PATTERN",
-                  "value": "[^\\\\\"\\u0001-\\u001F]+"
-                }
+                "type": "PATTERN",
+                "value": "[^\\\\\"\\u0001-\\u001F]+"
               }
-            },
-            "named": true,
-            "value": "tok"
+            }
           },
           {
             "type": "SYMBOL",
@@ -794,7 +789,7 @@
         },
         {
           "type": "PATTERN",
-          "value": "\\s"
+          "value": "(\\s)"
         }
       ]
     },
