@@ -1,5 +1,6 @@
 const sep = (item, valsep) => seq(
-  repeat(seq(item, optional(valsep))),
+  repeat(seq(item, valsep)),
+  optional(item),
 )
 
 const entries = $ => sep(
@@ -76,7 +77,7 @@ module.exports = grammar({
       field('disabled', optional($.disabled)), 
       field('key', $.key), 
       falias($, 'pipes', repeat($.pipe)),
-      optional(':'),
+      choice(':', /\s/),
       field('value', $.value),
     )),
 
@@ -129,6 +130,13 @@ module.exports = grammar({
 
     jsonstring: $ => choice(
       '""',
+      // note: tree-sitter doesn't seem to respect token.immediate here 
+      // or in string_content or in escape_sequence
+      // it will accept happily strings that contain newlines
+      // forcing correct behavior would probably require manual handling of whitespace and comments
+      // for now this shall remain unresolved
+      // could workaround in the interpreter that would error if it detects a newline in a string
+      // filing an issue on tree-sitter github  may also be a good idea
       seq('"', $.string_content, token.immediate('"'))
     ),
 
@@ -137,8 +145,8 @@ module.exports = grammar({
       // in other words: any code point except control characters and '"' and '\'
       // we will express that with a negated character class
       // note: U+0001–U+001F are the control characters
-      token.immediate(prec(1, /[^\\"\u0001-\u001F]+/u)),
-      $.escape_sequence
+      token.immediate(prec(1, /[^\\"\u0001-\u001F]+/)),
+      $.escape_sequence,
     )),
 
     escape_sequence: $ => token.immediate(seq(
@@ -146,7 +154,7 @@ module.exports = grammar({
       /(\"|\\|\/|b|f|n|r|t|u[0-9a-fA-F]{4})/
     )),
 
-    _valsep: $ => ',',
+    _valsep: $ => choice(',', /\s/),
 
     _primitive: $ => choice(
       alias('null', $.null), 

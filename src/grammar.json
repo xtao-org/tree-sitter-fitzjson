@@ -74,19 +74,23 @@
                             "name": "entry"
                           },
                           {
-                            "type": "CHOICE",
-                            "members": [
-                              {
-                                "type": "SYMBOL",
-                                "name": "_valsep"
-                              },
-                              {
-                                "type": "BLANK"
-                              }
-                            ]
+                            "type": "SYMBOL",
+                            "name": "_valsep"
                           }
                         ]
                       }
+                    },
+                    {
+                      "type": "CHOICE",
+                      "members": [
+                        {
+                          "type": "SYMBOL",
+                          "name": "entry"
+                        },
+                        {
+                          "type": "BLANK"
+                        }
+                      ]
                     }
                   ]
                 },
@@ -150,19 +154,23 @@
                             "name": "item"
                           },
                           {
-                            "type": "CHOICE",
-                            "members": [
-                              {
-                                "type": "SYMBOL",
-                                "name": "_valsep"
-                              },
-                              {
-                                "type": "BLANK"
-                              }
-                            ]
+                            "type": "SYMBOL",
+                            "name": "_valsep"
                           }
                         ]
                       }
+                    },
+                    {
+                      "type": "CHOICE",
+                      "members": [
+                        {
+                          "type": "SYMBOL",
+                          "name": "item"
+                        },
+                        {
+                          "type": "BLANK"
+                        }
+                      ]
                     }
                   ]
                 },
@@ -244,7 +252,8 @@
                 "value": ":"
               },
               {
-                "type": "BLANK"
+                "type": "PATTERN",
+                "value": "\\s"
               }
             ]
           },
@@ -556,19 +565,23 @@
                     "name": "item"
                   },
                   {
-                    "type": "CHOICE",
-                    "members": [
-                      {
-                        "type": "SYMBOL",
-                        "name": "_valsep"
-                      },
-                      {
-                        "type": "BLANK"
-                      }
-                    ]
+                    "type": "SYMBOL",
+                    "name": "_valsep"
                   }
                 ]
               }
+            },
+            {
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "SYMBOL",
+                  "name": "item"
+                },
+                {
+                  "type": "BLANK"
+                }
+              ]
             }
           ]
         },
@@ -598,19 +611,23 @@
                     "name": "entry"
                   },
                   {
-                    "type": "CHOICE",
-                    "members": [
-                      {
-                        "type": "SYMBOL",
-                        "name": "_valsep"
-                      },
-                      {
-                        "type": "BLANK"
-                      }
-                    ]
+                    "type": "SYMBOL",
+                    "name": "_valsep"
                   }
                 ]
               }
+            },
+            {
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "SYMBOL",
+                  "name": "entry"
+                },
+                {
+                  "type": "BLANK"
+                }
+              ]
             }
           ]
         },
@@ -730,15 +747,20 @@
         "type": "CHOICE",
         "members": [
           {
-            "type": "IMMEDIATE_TOKEN",
+            "type": "ALIAS",
             "content": {
-              "type": "PREC",
-              "value": 1,
+              "type": "IMMEDIATE_TOKEN",
               "content": {
-                "type": "PATTERN",
-                "value": "[^\\\\\"\\u0001-\\u001F]+"
+                "type": "PREC",
+                "value": 1,
+                "content": {
+                  "type": "PATTERN",
+                  "value": "[^\\\\\"\\u0001-\\u001F]+"
+                }
               }
-            }
+            },
+            "named": true,
+            "value": "tok"
           },
           {
             "type": "SYMBOL",
@@ -764,8 +786,17 @@
       }
     },
     "_valsep": {
-      "type": "STRING",
-      "value": ","
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "STRING",
+          "value": ","
+        },
+        {
+          "type": "PATTERN",
+          "value": "\\s"
+        }
+      ]
     },
     "_primitive": {
       "type": "CHOICE",
