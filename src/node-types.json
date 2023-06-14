@@ -109,69 +109,10 @@
   {
     "type": "entries",
     "named": true,
-    "fields": {
-      "decorators": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "decorators",
-            "named": true
-          }
-        ]
-      },
-      "disabled": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "disabled",
-            "named": true
-          }
-        ]
-      },
-      "key": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "id",
-            "named": true
-          },
-          {
-            "type": "number",
-            "named": true
-          },
-          {
-            "type": "string",
-            "named": true
-          }
-        ]
-      },
-      "pipes": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "pipes",
-            "named": true
-          }
-        ]
-      },
-      "value": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "value",
-            "named": true
-          }
-        ]
-      }
-    },
+    "fields": {},
     "children": {
       "multiple": true,
-      "required": false,
+      "required": true,
       "types": [
         {
           "type": "entry",

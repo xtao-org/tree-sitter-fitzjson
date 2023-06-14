@@ -65,12 +65,18 @@ module.exports = grammar({
       prec(3, $.value), 
       prec(2, seq(
         optional(seq('|', '{', '}', optional($._plainval), '|')), 
-        alias(entries($), $.entries),
+        optional($.entries),
       )), 
       prec(1, seq(
         seq('|', '[', ']', optional($._plainval), '|'), 
+        // todo: dealias items like entries
         alias(items($), $.items),
       )),
+    ),
+    entries: $ => seq(
+      repeat(seq($.entry, $._valsep)),
+      $.entry,
+      optional($._valsep),
     ),
     entry: $ => prec(2, seq(
       falias($, 'decorators', repeat($.decorator)),
@@ -84,6 +90,9 @@ module.exports = grammar({
 
     item: $ => //falias($, 'value', 
       seq(
+        // todo: perhaps dealias into repeat1 and do optional($.decorators) here
+        // same in other places
+        // alias seems plain buggy
         falias($, 'decorators', repeat($.decorator)),
         field('disabled', optional($.disabled)), 
         $._plainval, 
