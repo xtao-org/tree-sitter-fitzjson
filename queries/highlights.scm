@@ -22,7 +22,6 @@
 ;(multicomment (string (multistring) @comment)) 
 
 (decorator) @tag
-(pipe) @tag
 (disabled) @comment
 
 ;(entry (disabled)) @comment
