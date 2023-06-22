@@ -81,10 +81,9 @@ module.exports = grammar({
     entry: $ => prec(2, seq(
       falias($, 'decorators', repeat($.decorator)),
       field('disabled', optional($.disabled)), 
-      field('key', $.key), 
-      falias($, 'pipes', repeat($.pipe)),
-      // note: /(\s)/ has to have the parens; otherwise tree-sitter somehow conflates this with /\s/ in extras and very weird things start happening, such as not respecting token.immediate and accepting jsonstrings with spaces 
-      choice(':', /(\s)/),
+      field('key', $.key),
+      // note: /(\s)/ has to have the parens; otherwise tree-sitter somehow conflates this with /\s/ in extras and very weird things start happening, such as not respecting token.immediate and accepting jsonstrings with spaces
+      /(:)|(\s)/,
       field('value', $.value),
     )),
 
@@ -95,8 +94,7 @@ module.exports = grammar({
         // alias seems plain buggy
         falias($, 'decorators', repeat($.decorator)),
         field('disabled', optional($.disabled)), 
-        $._plainval, 
-        falias($, 'pipes', repeat($.pipe)),
+        $._plainval,
       ),
       //)
 
@@ -111,7 +109,6 @@ module.exports = grammar({
     parened: $ => seq('(', field('value', choice($.string, $.id, $.number)), ')'),
 
     decorator: $ => seq('@', optional($.disabled), $._plainval),
-    pipe: $ => seq('|', optional($.disabled), $._plainval),
     // _expr: $ => $._plainval,
 
     key: $ => choice($.string, $.id, $.number),
@@ -119,8 +116,7 @@ module.exports = grammar({
     // todo?: rename to mvalue? (modified_value, adorned_value)
     value: $ => seq(
       falias($, 'decorators', repeat($.decorator)), 
-      $._plainval, 
-      falias($, 'pipes', repeat($.pipe))
+      $._plainval,
     ),
     _plainval: $ => field('plainval', choice($._primitive, $.list, $.map, $.id, $.path)),
 
@@ -130,6 +126,7 @@ module.exports = grammar({
       items($),
     ']'),
 
+    // todo?: use $.entries instead -- would need to change the interpreter
     map: $ => seq('{', entries($), '}'),
 
     disabled: $ => '~',

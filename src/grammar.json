@@ -240,33 +240,8 @@
             }
           },
           {
-            "type": "FIELD",
-            "name": "pipes",
-            "content": {
-              "type": "ALIAS",
-              "content": {
-                "type": "REPEAT",
-                "content": {
-                  "type": "SYMBOL",
-                  "name": "pipe"
-                }
-              },
-              "named": true,
-              "value": "pipes"
-            }
-          },
-          {
-            "type": "CHOICE",
-            "members": [
-              {
-                "type": "STRING",
-                "value": ":"
-              },
-              {
-                "type": "PATTERN",
-                "value": "(\\s)"
-              }
-            ]
+            "type": "PATTERN",
+            "value": "(:)|(\\s)"
           },
           {
             "type": "FIELD",
@@ -317,22 +292,6 @@
         {
           "type": "SYMBOL",
           "name": "_plainval"
-        },
-        {
-          "type": "FIELD",
-          "name": "pipes",
-          "content": {
-            "type": "ALIAS",
-            "content": {
-              "type": "REPEAT",
-              "content": {
-                "type": "SYMBOL",
-                "name": "pipe"
-              }
-            },
-            "named": true,
-            "value": "pipes"
-          }
         }
       ]
     },
@@ -437,31 +396,6 @@
         }
       ]
     },
-    "pipe": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "STRING",
-          "value": "|"
-        },
-        {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "SYMBOL",
-              "name": "disabled"
-            },
-            {
-              "type": "BLANK"
-            }
-          ]
-        },
-        {
-          "type": "SYMBOL",
-          "name": "_plainval"
-        }
-      ]
-    },
     "key": {
       "type": "CHOICE",
       "members": [
@@ -501,22 +435,6 @@
         {
           "type": "SYMBOL",
           "name": "_plainval"
-        },
-        {
-          "type": "FIELD",
-          "name": "pipes",
-          "content": {
-            "type": "ALIAS",
-            "content": {
-              "type": "REPEAT",
-              "content": {
-                "type": "SYMBOL",
-                "name": "pipe"
-              }
-            },
-            "named": true,
-            "value": "pipes"
-          }
         }
       ]
     },

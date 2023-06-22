@@ -163,16 +163,6 @@
           }
         ]
       },
-      "pipes": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "pipes",
-            "named": true
-          }
-        ]
-      },
       "value": {
         "multiple": false,
         "required": true,
@@ -205,16 +195,6 @@
         "types": [
           {
             "type": "disabled",
-            "named": true
-          }
-        ]
-      },
-      "pipes": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "pipes",
             "named": true
           }
         ]
@@ -251,16 +231,6 @@
         "types": [
           {
             "type": "disabled",
-            "named": true
-          }
-        ]
-      },
-      "pipes": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "pipes",
             "named": true
           }
         ]
@@ -402,40 +372,6 @@
     }
   },
   {
-    "type": "pipe",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "_plainval",
-          "named": true
-        },
-        {
-          "type": "disabled",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "pipes",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "pipe",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
     "type": "string",
     "named": true,
     "fields": {},
@@ -509,16 +445,6 @@
             "named": true
           }
         ]
-      },
-      "pipes": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "pipes",
-            "named": true
-          }
-        ]
       }
     },
     "children": {
@@ -562,10 +488,6 @@
   },
   {
     "type": "/",
-    "named": false
-  },
-  {
-    "type": ":",
     "named": false
   },
   {

@@ -39,7 +39,7 @@ database {
   ]
 }
 
-dob @date @x '1979-05-27T07:32:00-08:00' | date
+dob @date @x '1979-05-27T07:32:00-08:00'
 
 xyz @u8 23
 
@@ -70,7 +70,7 @@ multiline ``'/* */
 
 m1 'sadasd'
 
-m2 [`'a'``'b'`'c''d']
+m2 [`'a'` `'b'` 'c' 'd']
 
 x '  
  /**/  
